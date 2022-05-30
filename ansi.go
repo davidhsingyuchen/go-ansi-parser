@@ -2,9 +2,10 @@ package ansi
 
 import (
 	"fmt"
-	"github.com/rivo/uniseg"
 	"strconv"
 	"strings"
+
+	"github.com/rivo/uniseg"
 )
 
 // TextStyle is a type representing the
@@ -74,14 +75,6 @@ func (s *StyledText) styleToParams() []string {
 	if s.FgCol != nil {
 		// Do we have an ID?
 		switch true {
-		case s.FgCol.Id < 16:
-			offset := 30
-			id := s.FgCol.Id
-			// Adjust when bold has been applied to the id
-			if s.Bold() && id > 7 && id < 16 {
-				id -= 8
-			}
-			params = append(params, fmt.Sprintf("%d", id+offset))
 		case s.FgCol.Id < 256:
 			params = append(params, []string{"38", "5", fmt.Sprintf("%d", s.FgCol.Id)}...)
 		case s.FgCol.Id == 256:
